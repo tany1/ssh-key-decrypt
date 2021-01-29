@@ -134,7 +134,7 @@ function passphraseToKey(type, passphrase, salt)
       c.update(passphrase);
 
     c.update(salt);
-    md_buf = c.digest('buffer');
+    md_buf = c.digest();
 
     var i = 0;
     while (nkey && i < mds)
