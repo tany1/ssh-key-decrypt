@@ -6,7 +6,7 @@ if (util.debuglog)
   debug = util.debuglog('ssh-key-decrypt');
 else if (/\bssh-key-decrypt\b/i.test(process.env.NODE_DEBUG || ''))
   debug = function () {
-    var msg = util.format.apply(util, arguments);
+    const msg = util.format.apply(util, arguments);
     console.error('%s %s', 'SSH-KEY-DECRYPT', msg);
   };
 else
@@ -134,7 +134,7 @@ function passphraseToKey(type, passphrase, salt) {
     niv -= steps;
     i += steps;
 
-    if ((nkey == 0) && (niv == 0)) break;
+    if ((nkey === 0) && (niv === 0)) break;
   }
 
   return key;
