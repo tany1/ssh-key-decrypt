@@ -35,7 +35,7 @@ function main(data, passphrase, outEnc) {
   }
 
   // Make sure it looks like a RSA private key before moving forward
-  data = data.replace(/\r\n\/g, '\n');
+  data = data.replace(/\r\n/g, '\n');
   const lines = data.trim().split('\n');
   // assert.strictEqual(lines[0], '-----BEGIN RSA PRIVATE KEY-----');
   // assert.strictEqual(lines[lines.length - 1], '-----END RSA PRIVATE KEY-----');
