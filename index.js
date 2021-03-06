@@ -24,7 +24,6 @@ const keyBytes =
     'AES-256-CBC': 32
   };
 
-
 function main(data, passphrase, outEnc) {
   if (Buffer.isBuffer(data)) {
     data = data.toString('ascii');
@@ -34,11 +33,18 @@ function main(data, passphrase, outEnc) {
     outEnc = 'buffer';
   }
 
-  // Make sure it looks like a RSA private key before moving forward
+  // Replace CRLF endings and split into lines
   data = data.replace(/\r\n/g, '\n');
   const lines = data.trim().split('\n');
-  // assert.strictEqual(lines[0], '-----BEGIN RSA PRIVATE KEY-----');
-  // assert.strictEqual(lines[lines.length - 1], '-----END RSA PRIVATE KEY-----');
+
+  // Make sure it looks like a RSA private key before moving forward
+  const regHeader = /-----BEGIN(\sRSA\s|\sENCRYPTED\s|\s)PRIVATE KEY-----/g;
+  const regFooter = /-----END(\sRSA\s|\sENCRYPTED\s|\s)PRIVATE KEY-----/g;
+  const testHeader = regHeader.test(lines[0]);
+  const testFooter = regFooter.test(lines[lines.length - 1]);
+
+  assert(testHeader === true);
+  assert(testFooter === true);
 
   let result;
   if (lines[1] === 'Proc-Type: 4,ENCRYPTED') {
